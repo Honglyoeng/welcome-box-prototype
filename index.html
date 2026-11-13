@@ -39,20 +39,21 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .hint span{display:inline-block;background:var(--cream);box-shadow:0 4px 14px rgba(20,24,30,.15);color:var(--accent);font-size:14px;font-weight:600;padding:7px 12px;border-radius:14px}
 
 /* About dialog */
-.about{border:0;padding:0;border-radius:20px;width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);background:var(--cream);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.4);font-family:var(--body)}
+.about{border:0;padding:0;border-radius:20px;width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:hidden;background:var(--cream);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.4);font-family:var(--body)}
 .about::backdrop{background:var(--veil)}
 .about .ab-head{background:var(--accent);color:#fff;padding:22px 24px 18px;position:relative}
 .about .ab-head .eyebrow{color:var(--sun)}.about .ab-head .eyebrow::before{background:var(--sun)}
-.about h2{margin:4px 0 0;padding-right:72px;font-family:var(--display);font-weight:400;font-size:30px;text-transform:uppercase;letter-spacing:.01em}
-.about .ab-body{padding:20px 24px 24px;font-size:15px;line-height:1.55}
+.about h2{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:30px;text-transform:uppercase;letter-spacing:.01em}
+.about[open]{display:flex;flex-direction:column}
+.about .ab-body{padding:20px 24px 24px;font-size:15px;line-height:1.55;overflow-y:auto;flex:1;min-height:0}
+.about .ab-bar{flex:none;display:flex;gap:10px;padding:14px 24px;background:var(--cream);border-top:1px solid var(--line);box-shadow:0 -8px 20px rgba(31,58,120,.08)}
+.about .ab-bar .btn{flex:1;justify-content:center;padding:13px 16px;font-size:14px}
 .about p{margin:0 0 14px}
 .about h3{margin:18px 0 8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--red)}
 .about ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
 .about li{display:flex;gap:10px;align-items:flex-start}
 .about li b{color:var(--accent)}
 .about li::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;border-radius:50%;background:var(--accent)}
-.about .ab-close{position:absolute;right:14px;top:14px;background:#fff;color:var(--accent);border:0}
-.about .ab-go{margin-top:20px}
 .about .ab-go::before{content:none}
 
 /* Stage */
@@ -162,8 +163,8 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   .links{flex-wrap:nowrap;gap:8px}
   .btn{padding:9px 12px}
   .lbl-long{display:none}.lbl-short{display:inline}
-  .btn.primary{width:40px;height:40px;padding:0;justify-content:center}
-  .btn.primary::before{width:22px;height:22px;font-size:14px;background:none;color:#fff}
+  #aboutbtn{width:40px;height:40px;padding:0;justify-content:center}
+  #aboutbtn::before{width:22px;height:22px;font-size:14px;background:none;color:#fff}
   .hint{text-align:center;margin-top:10px}
   .hint span{font-size:13px}
   .stage{min-height:max(520px,calc(100svh - 150px));transition:min-height .6s}
@@ -216,7 +217,6 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   <div class="ab-head">
     <span class="eyebrow">Cardiology ward</span>
     <h2 id="abtitle">What is the welcome box?</h2>
-    <button class="btn ab-close" id="abclose">Close</button>
   </div>
   <div class="ab-body">
     <p>Arriving on a ward can feel sudden and confusing. The welcome box is a small gift that is waiting for every patient when they come to the cardiology ward.</p>
@@ -233,6 +233,9 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     <h3>Why it matters</h3>
     <p>When patients know what to expect, they feel calmer, ask better questions and feel less alone during their stay.</p>
     <p>Because the everyday answers are already in the box, patients need to call or ask the staff less often for small things. That leaves the team more time for care.</p>
+  </div>
+  <div class="ab-bar">
+    <button class="btn" id="abclose">Close</button>
     <button class="btn primary ab-go" id="abgo">Open the box</button>
   </div>
 </dialog>
