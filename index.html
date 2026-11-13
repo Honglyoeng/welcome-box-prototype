@@ -55,6 +55,14 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .about li b{color:var(--accent)}
 .about li::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;border-radius:50%;background:var(--accent)}
 .about .ab-go::before{content:none}
+.about .ab-first{margin-top:0}
+.about .ab-prob{background:#FDECEC;border:1px solid #F6C9CB;border-radius:14px;padding:14px 16px;margin-bottom:6px}
+.about .ab-prob p{margin:0 0 10px;font-size:14px}
+.about .ab-prob ul{gap:7px}
+.about .ab-prob li{font-size:13.5px;line-height:1.45}
+.about .ab-prob li::before{background:var(--red)}
+.about .ab-prob li b{color:var(--red)}
+
 .about .ab-lead{font-size:16px;font-weight:600;color:var(--accent);margin:0 0 16px}
 .about .ab-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
 .about .ab-steps div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
@@ -245,6 +253,17 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     <h2 id="abtitle">What is the welcome box?</h2>
   </div>
   <div class="ab-body">
+    <h3 class="ab-first">The problem</h3>
+    <div class="ab-prob">
+      <p>Patients often arrive on the cardiology ward suddenly, worried and tired. In those first hours they get a lot of information at once, mostly spoken, and much of it is forgotten.</p>
+      <ul>
+        <li><span><b>They don't know what to expect.</b> Who is who, what a day looks like, how meals work.</span></li>
+        <li><span><b>Small questions become calls.</b> Patients press the call button for things like a charger or the wifi code, which pulls nurses away from care.</span></li>
+        <li><span><b>Questions get lost.</b> When the doctor comes by, patients forget what they wanted to ask, or find their heart hard to understand.</span></li>
+        <li><span><b>They feel alone.</b> Far from home, unsure, with no one who has been through it.</span></li>
+      </ul>
+    </div>
+    <h3>The idea</h3>
     <p class="ab-lead">A small gift waiting in the room for every patient on the cardiology ward. Everything people usually ask about, in one box.</p>
     <div class="ab-steps">
       <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg></span><b>Read</b><small>at your own pace</small></div>
