@@ -193,7 +193,6 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
       <button class="btn primary" id="aboutbtn" aria-haspopup="dialog" aria-label="What is the welcome box?"><span class="lbl-long">What is the welcome box?</span></button>
     </div>
   </header>
-  <p class="hint"><span id="hint">Click the box to open it.</span></p>
 
   <div class="stage" id="stage">
     <button class="boxbtn" id="boxbtn" aria-label="Open the welcome box">
@@ -211,7 +210,6 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     <div class="tap" id="tap">Tap the box</div>
     <div class="items" id="items"></div>
   </div>
-  <p class="foot"><span>Pages come from the welcome box design. Click a material to look through it. Use the arrow keys to turn pages and Esc to close.</span></p>
 </div>
 
 <dialog class="about" id="about" aria-labelledby="abtitle">
@@ -228,12 +226,13 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
       <li><span><b>Welcome book.</b> Who you will meet, what a day looks like, space for your own questions and stories from other patients.</span></li>
       <li><span><b>Food card.</b> How meals work on the ward.</span></li>
       <li><span><b>Things you can ask for.</b> Small comforts you only have to ask the team for.</span></li>
-      <li><span><b>Heart and blood circulation.</b> A simple picture of how your heart and blood flow work.</span></li>
+      <li><span><b>Heart and blood circulation.</b> A simple picture of the heart and blood flow that doctors and patients can point at together, to talk things through and understand each other.</span></li>
       <li><span><b>Exercise leaflet.</b> Gentle movements to do step by step.</span></li>
       <li><span><b>Pen and tote bag.</b> To write your questions down and take everything home.</span></li>
     </ul>
     <h3>Why it matters</h3>
     <p>When patients know what to expect, they feel calmer, ask better questions and feel less alone during their stay.</p>
+    <p>Because the everyday answers are already in the box, patients need to call or ask the staff less often for small things. That leaves the team more time for care.</p>
     <button class="btn primary ab-go" id="abgo">Open the box</button>
   </div>
 </dialog>
@@ -293,8 +292,6 @@ function setOpen(v){
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  document.getElementById('reset').hidden=!v;
  document.body.classList.toggle('is-open',v);
- const touch=matchMedia('(pointer:coarse)').matches||innerWidth<640,act=touch?'Tap':'Click';
- document.getElementById('hint').textContent=v?(touch?'Drag to move things. Tap one to look through it.':'Drag things around the bed. Click a material to look through it.'):`${act} the box to open it.`;
  boxbtn.setAttribute('aria-label',v?'Close the welcome box':'Open the welcome box');
  if(v){stage.classList.add('open');
   // Wait until the box has settled and the lid is mostly open, then lift each item out of the box and lay it on the table.
@@ -324,7 +321,6 @@ function setOpen(v){
  }
 }
 boxbtn.addEventListener('click',()=>setOpen(!isOpen));
-if(matchMedia('(pointer:coarse)').matches)document.getElementById('hint').textContent='Tap the box to open it.';
 document.getElementById('reset').addEventListener('click',()=>setOpen(false));
 
 /* Viewer */
