@@ -64,8 +64,8 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .lid .out{background-image:url(img/box-lid.jpg);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .lid .in{transform:rotateY(180deg);background:#fff}
 .lid .in i{position:absolute;left:50%;top:50%;width:75%;height:133.33%;transform:translate(-50%,-50%) rotate(-90deg);background:url(img/box-inside.jpg) center/100% 100%}
-.tap{position:absolute;left:50%;top:calc(46% + 160px);transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--red);background:var(--panel);padding:8px 14px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.15);display:flex;gap:8px;align-items:center;transition:opacity .3s;white-space:nowrap}
-.tap::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+.tap{position:absolute;left:50%;top:calc(46% + 160px);transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(20,32,64,.82);padding:8px 14px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.15);display:flex;gap:8px;align-items:center;transition:opacity .3s;white-space:nowrap}
+.tap::before{content:"";width:10px;height:10px;border-radius:50%;background:#ff5a5f;animation:pulse 1.6s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(226,20,27,.5)}100%{box-shadow:0 0 0 14px rgba(226,20,27,0)}}
 .open .tap{opacity:0;pointer-events:none}
 
@@ -139,7 +139,6 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 </head>
 <body>
 
-
 <div class="wrap">
   <header>
     <div class="brand">
@@ -148,7 +147,6 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     </div>
     <div class="links">
       <button class="btn" id="reset" hidden>Put everything back</button>
-      <a class="btn" href="https://claude.ai/artifact/DHd2Xve7zopzy9xHSJPAf2" target="_blank" rel="noopener">Open the design ↗</a>
     </div>
   </header>
   <p class="hint"><span id="hint">Click the box to open it.</span></p>
