@@ -43,7 +43,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .about::backdrop{background:var(--veil)}
 .about .ab-head{background:var(--accent);color:#fff;padding:22px 24px 18px;position:relative}
 .about .ab-head .eyebrow{color:var(--sun)}.about .ab-head .eyebrow::before{background:var(--sun)}
-.about h2{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:30px;text-transform:uppercase;letter-spacing:.01em}
+.about h2{margin:4px 0 0;padding-right:72px;font-family:var(--display);font-weight:400;font-size:30px;text-transform:uppercase;letter-spacing:.01em}
 .about .ab-body{padding:20px 24px 24px;font-size:15px;line-height:1.55}
 .about p{margin:0 0 14px}
 .about h3{margin:18px 0 8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--red)}
@@ -93,6 +93,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 
 /* Materials on the table */
 .items{position:absolute;inset:0;pointer-events:none;z-index:3}
+.stage:not(.out) .items{overflow:hidden}
 .item{position:absolute;left:var(--x);top:var(--y);width:var(--w);pointer-events:auto;background:none;border:0;padding:0;cursor:pointer;transform:translate(-50%,-50%) perspective(1600px) rotateX(var(--tilt)) rotate(var(--r));transition:transform .25s;opacity:0;visibility:hidden}
 .item{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
 .item.dragging{cursor:grabbing;transition:none;z-index:20!important}
@@ -149,12 +150,32 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .card.flipped{transform:rotateY(180deg)}
 .foot{max-width:1180px;width:100%;margin:8px auto 0;font-size:12px}
 .foot span{display:inline-block;background:var(--cream);color:var(--muted);padding:6px 12px;border-radius:999px}
+/* Phones: a compact header, the box centred on one screen, then a tidy two-column spread once it opens. */
+.lbl-short{display:none}
 @media (max-width:640px){
-  .stage{min-height:1440px}
-  .scene{--s:.46}
-  .boxbtn{top:200px}
-  .open .boxbtn{top:290px;transform:translate(-50%,-50%) scale(.62)}
-  .tap{top:330px}
+  .wrap{padding-block:12px 20px;background:#E6ECF6}
+  body{background:#E6ECF6}
+  .hint span,.item .label{box-shadow:0 2px 8px rgba(31,58,120,.12)}
+  header{flex-wrap:nowrap;padding:12px 12px 12px 16px;border-radius:14px;gap:10px}
+  .eyebrow{font-size:10px;white-space:nowrap;letter-spacing:.06em}
+  h1{font-size:26px}
+  .links{flex-wrap:nowrap;gap:8px}
+  .btn{padding:9px 12px}
+  .lbl-long{display:none}.lbl-short{display:inline}
+  .btn.primary{width:40px;height:40px;padding:0;justify-content:center}
+  .btn.primary::before{width:22px;height:22px;font-size:14px;background:none;color:#fff}
+  .hint{text-align:center;margin-top:10px}
+  .hint span{font-size:13px}
+  .stage{min-height:max(520px,calc(100svh - 150px));transition:min-height .6s}
+  .stage.open{min-height:1420px}
+  .scene{--s:.44}
+  .boxbtn{top:44%}
+  .open .boxbtn{top:250px;transform:translate(-50%,-50%) scale(.55)}
+  .tap{top:calc(44% + 110px)}
+  #reset{width:40px;height:40px;padding:0;justify-content:center;font-size:20px}
+  .item .label{font-size:11px;padding:5px 9px;margin-top:8px}
+  .foot{display:none}
+  body:not(.is-open) .hint{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 </style>
@@ -168,8 +189,8 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
       <h1>The welcome box</h1>
     </div>
     <div class="links">
-      <button class="btn" id="reset" hidden>Put everything back</button>
-      <button class="btn primary" id="aboutbtn" aria-haspopup="dialog">What is the welcome box?</button>
+      <button class="btn" id="reset" hidden aria-label="Put everything back"><span class="lbl-long">Put everything back</span><span class="lbl-short" aria-hidden="true">↺</span></button>
+      <button class="btn primary" id="aboutbtn" aria-haspopup="dialog" aria-label="What is the welcome box?"><span class="lbl-long">What is the welcome box?</span></button>
     </div>
   </header>
   <p class="hint"><span id="hint">Click the box to open it.</span></p>
@@ -239,7 +260,7 @@ const PROPS=[{id:'tote',src:'img/tote.png'},{id:'pen',src:'img/pen.png'}];
 // The tote goes first so it lies under everything else.
 const order=['tote','book','heart','band','food','ask','pen'];
 const SPOTS={wide:{book:[11,42,160,0],heart:[26,42,128,0],band:[24,84,250,0],ask:[73,38,120,0],food:[73,80,170,0],tote:[90,52,170,0],pen:[51,88,16,90]},
-             narrow:{book:[27,570,130,0],food:[73,530,150,0],ask:[73,720,118,0],heart:[27,810,115,0],band:[50,1075,290,0],tote:[68,1290,170,0],pen:[24,1280,16,0]}};
+             narrow:{book:[27,500,138,0],heart:[73,500,138,0],ask:[27,770,138,0],food:[73,725,150,0],band:[50,1025,300,0],tote:[66,1290,150,0],pen:[30,1290,16,-18]}};
 const TILT=16;
 const stage=document.getElementById('stage'),itemsEl=document.getElementById('items'),boxbtn=document.getElementById('boxbtn');
 const els={};
@@ -271,7 +292,9 @@ function setOpen(v){
  if(v===isOpen)return;isOpen=v;
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  document.getElementById('reset').hidden=!v;
- document.getElementById('hint').textContent=v?'Drag things around the bed. Click a material to look through it.':'Click the box to open it.';
+ document.body.classList.toggle('is-open',v);
+ const touch=matchMedia('(pointer:coarse)').matches||innerWidth<640,act=touch?'Tap':'Click';
+ document.getElementById('hint').textContent=v?(touch?'Drag to move things. Tap one to look through it.':'Drag things around the bed. Click a material to look through it.'):`${act} the box to open it.`;
  boxbtn.setAttribute('aria-label',v?'Close the welcome box':'Open the welcome box');
  if(v){stage.classList.add('open');
   // Wait until the box has settled and the lid is mostly open, then lift each item out of the box and lay it on the table.
@@ -301,6 +324,7 @@ function setOpen(v){
  }
 }
 boxbtn.addEventListener('click',()=>setOpen(!isOpen));
+if(matchMedia('(pointer:coarse)').matches)document.getElementById('hint').textContent='Tap the box to open it.';
 document.getElementById('reset').addEventListener('click',()=>setOpen(false));
 
 /* Viewer */
