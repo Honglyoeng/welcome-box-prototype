@@ -11,27 +11,49 @@
 :root{
   --table:#E4EAF5;--table-2:#D3DCEE;--ink:#1F3A78;--muted:#5A6E9C;
   --blue:#2F52A0;--red:#E2141B;--yellow:#F1F09F;--paper:#FFFFFF;
-  --shadow:rgba(20,24,30,.38);--panel:rgba(255,255,255,.86);--veil:rgba(20,32,64,.72);--chip:#FFFFFF;
+  --shadow:rgba(20,24,30,.38);--panel:#FFFCF4;--veil:rgba(20,32,64,.72);--chip:#FFFFFF;
+  --cream:#FFFCF4;--line:#E9E1CC;--accent:#2F52A0;--accent-ink:#FFFFFF;--sun:#F1F09F;
   --display:'Anton','Impact','Arial Narrow',sans-serif;
   --body:'Montserrat','Helvetica Neue',Arial,sans-serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --table:#141D33;--table-2:#0E1527;--ink:#E6ECFA;--muted:#9FB0D6;--shadow:rgba(0,0,0,.55);--veil:rgba(5,9,20,.82);--chip:#1E2A48;--panel:rgba(16,24,44,.84);color-scheme:dark}}
-:root[data-theme="dark"]{--table:#141D33;--table-2:#0E1527;--ink:#E6ECFA;--muted:#9FB0D6;--shadow:rgba(0,0,0,.55);--veil:rgba(5,9,20,.82);--chip:#1E2A48;--panel:rgba(16,24,44,.84);color-scheme:dark}
+/* The page sits on a fixed photo, so the panels keep the same warm paper colours in dark mode; only the viewer veil gets deeper. */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--veil:rgba(5,9,20,.84)}}
+:root[data-theme="dark"]{--veil:rgba(5,9,20,.84)}
 html,body{height:100%}
 body{background:#8E9AA6;color:var(--ink);font-family:var(--body);overflow-x:hidden}
 .wrap{background:url(img/room.jpg) 50% 50%/cover no-repeat;min-height:100%;display:flex;flex-direction:column;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 24px;box-sizing:border-box}
-header{background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:16px;padding:12px 16px;box-sizing:border-box;box-shadow:0 6px 24px rgba(0,0,0,.12);display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;max-width:1180px;width:100%;margin:0 auto}
+header{background:var(--cream);border-radius:16px;padding:14px 18px;box-sizing:border-box;box-shadow:0 10px 30px rgba(20,24,30,.18);border-bottom:5px solid var(--accent);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;max-width:1180px;width:100%;margin:0 auto}
 .brand{display:flex;flex-direction:column;gap:2px}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
-h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,38px);letter-spacing:.01em;text-transform:uppercase;color:var(--ink);text-wrap:balance}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:6px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red)}
+h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,38px);letter-spacing:.01em;text-transform:uppercase;color:var(--accent);text-wrap:balance}
 .links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn{font:600 13px/1 var(--body);color:var(--ink);background:var(--chip);border:1.5px solid color-mix(in srgb,var(--ink) 25%,transparent);border-radius:999px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
-.btn:hover{border-color:var(--ink)}
+.btn{font:600 13px/1 var(--body);color:var(--ink);background:var(--chip);border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{background:#24438A}
+.btn.primary::before{content:"?";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--sun);color:var(--accent);font-weight:700;font-size:12px}
 .btn:focus-visible,.item:focus-visible,.boxbtn:focus-visible{outline:3px solid var(--red);outline-offset:3px}
 .btn[hidden]{display:none}
 .hint{max-width:1180px;width:100%;margin:8px auto 0;box-sizing:border-box;padding:0 4px}
-.hint span{display:inline-block;background:var(--panel);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--ink);font-size:14px;font-weight:600;padding:7px 12px;border-radius:999px}
+.hint span{display:inline-block;background:var(--cream);box-shadow:0 4px 14px rgba(20,24,30,.15);color:var(--accent);font-size:14px;font-weight:600;padding:7px 12px;border-radius:14px}
+
+/* About dialog */
+.about{border:0;padding:0;border-radius:20px;width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);background:var(--cream);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.4);font-family:var(--body)}
+.about::backdrop{background:var(--veil)}
+.about .ab-head{background:var(--accent);color:#fff;padding:22px 24px 18px;position:relative}
+.about .ab-head .eyebrow{color:var(--sun)}.about .ab-head .eyebrow::before{background:var(--sun)}
+.about h2{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:30px;text-transform:uppercase;letter-spacing:.01em}
+.about .ab-body{padding:20px 24px 24px;font-size:15px;line-height:1.55}
+.about p{margin:0 0 14px}
+.about h3{margin:18px 0 8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--red)}
+.about ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.about li{display:flex;gap:10px;align-items:flex-start}
+.about li b{color:var(--accent)}
+.about li::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;border-radius:50%;background:var(--accent)}
+.about .ab-close{position:absolute;right:14px;top:14px;background:#fff;color:var(--accent);border:0}
+.about .ab-go{margin-top:20px}
+.about .ab-go::before{content:none}
 
 /* Stage */
 .stage{position:relative;flex:1;min-height:640px;max-width:1180px;width:100%;margin:0 auto}
@@ -64,9 +86,9 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .lid .out{background-image:url(img/box-lid.jpg);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .lid .in{transform:rotateY(180deg);background:#fff}
 .lid .in i{position:absolute;left:50%;top:50%;width:75%;height:133.33%;transform:translate(-50%,-50%) rotate(-90deg);background:url(img/box-inside.jpg) center/100% 100%}
-.tap{position:absolute;left:50%;top:calc(46% + 160px);transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(20,32,64,.82);padding:8px 14px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.15);display:flex;gap:8px;align-items:center;transition:opacity .3s;white-space:nowrap}
-.tap::before{content:"";width:10px;height:10px;border-radius:50%;background:#ff5a5f;animation:pulse 1.6s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(226,20,27,.5)}100%{box-shadow:0 0 0 14px rgba(226,20,27,0)}}
+.tap{position:absolute;left:50%;top:calc(46% + 160px);transform:translateX(-50%);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--accent);padding:9px 16px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.15);display:flex;gap:8px;align-items:center;transition:opacity .3s;white-space:nowrap}
+.tap::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--sun);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(241,240,159,.8)}100%{box-shadow:0 0 0 12px rgba(241,240,159,0)}}
 .open .tap{opacity:0;pointer-events:none}
 
 /* Materials on the table */
@@ -83,7 +105,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .out .item{opacity:1;visibility:visible}
 .item img{display:block;width:100%;height:auto;box-shadow:0 28px 30px -6px rgba(20,24,30,.38),0 4px 8px rgba(0,0,0,.12);border-radius:3px;background:#fff}
 .item.dragging img{box-shadow:0 44px 40px -8px rgba(20,24,30,.42),0 6px 12px rgba(0,0,0,.14)}
-.item .label{display:table;margin:10px auto 0;font:700 12px/1.25 var(--body);color:var(--ink);text-align:center;letter-spacing:.02em;background:var(--panel);padding:5px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.item .label{display:table;margin:10px auto 0;font:700 12px/1.25 var(--body);color:var(--accent);text-align:center;letter-spacing:.02em;background:var(--panel);padding:5px 10px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .item:not(.prop):hover{transform:translate(-50%,-53%) perspective(1600px) rotateX(calc(var(--tilt) * .4)) rotate(0deg) scale(1.05);z-index:5}
 .item.book img{box-shadow:4px 10px 24px var(--shadow),inset 0 0 0 1px rgba(0,0,0,.1)}
 .item .cov{position:relative;display:block}
@@ -126,7 +148,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .card .b{transform:rotateY(180deg)}
 .card.flipped{transform:rotateY(180deg)}
 .foot{max-width:1180px;width:100%;margin:8px auto 0;font-size:12px}
-.foot span{display:inline-block;background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:999px}
+.foot span{display:inline-block;background:var(--cream);color:var(--muted);padding:6px 12px;border-radius:999px}
 @media (max-width:640px){
   .stage{min-height:1440px}
   .scene{--s:.46}
@@ -147,6 +169,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     </div>
     <div class="links">
       <button class="btn" id="reset" hidden>Put everything back</button>
+      <button class="btn primary" id="aboutbtn" aria-haspopup="dialog">What is the welcome box?</button>
     </div>
   </header>
   <p class="hint"><span id="hint">Click the box to open it.</span></p>
@@ -170,6 +193,29 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   <p class="foot"><span>Pages come from the welcome box design. Click a material to look through it. Use the arrow keys to turn pages and Esc to close.</span></p>
 </div>
 
+<dialog class="about" id="about" aria-labelledby="abtitle">
+  <div class="ab-head">
+    <span class="eyebrow">Cardiology ward</span>
+    <h2 id="abtitle">What is the welcome box?</h2>
+    <button class="btn ab-close" id="abclose">Close</button>
+  </div>
+  <div class="ab-body">
+    <p>Arriving on a ward can feel sudden and confusing. The welcome box is a small gift that is waiting for every patient when they come to the cardiology ward.</p>
+    <p>It gathers the things people usually ask about in one place, so patients and their family can find answers in their own time, at their own pace. It is ready in the room when patients arrive, so it adds no extra work for the nurses.</p>
+    <h3>What is inside</h3>
+    <ul>
+      <li><span><b>Welcome book.</b> Who you will meet, what a day looks like, space for your own questions and stories from other patients.</span></li>
+      <li><span><b>Food card.</b> How meals work on the ward.</span></li>
+      <li><span><b>Things you can ask for.</b> Small comforts you only have to ask the team for.</span></li>
+      <li><span><b>Heart and blood circulation.</b> A simple picture of how your heart and blood flow work.</span></li>
+      <li><span><b>Exercise leaflet.</b> Gentle movements to do step by step.</span></li>
+      <li><span><b>Pen and tote bag.</b> To write your questions down and take everything home.</span></li>
+    </ul>
+    <h3>Why it matters</h3>
+    <p>When patients know what to expect, they feel calmer, ask better questions and feel less alone during their stay.</p>
+    <button class="btn primary ab-go" id="abgo">Open the box</button>
+  </div>
+</dialog>
 <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="vtitle">
   <div class="vtop"><span class="vtitle" id="vtitle"></span><button class="btn vclose" id="vclose">Close</button></div>
   <div class="vstage" id="vstage"></div>
@@ -313,6 +359,11 @@ function go(d){
 }
 prev.addEventListener('click',()=>go(-1));next.addEventListener('click',()=>go(1));
 document.getElementById('vclose').addEventListener('click',closeViewer);
+const about=document.getElementById('about');
+document.getElementById('aboutbtn').addEventListener('click',()=>about.showModal());
+document.getElementById('abclose').addEventListener('click',()=>about.close());
+about.addEventListener('click',e=>{if(e.target===about)about.close();});
+document.getElementById('abgo').addEventListener('click',()=>{about.close();const b=document.getElementById('boxbtn');if(!document.getElementById('stage').classList.contains('open'))b.click();});
 viewer.addEventListener('click',e=>{if(e.target===viewer||e.target===vstage)closeViewer();});
 addEventListener('keydown',e=>{if(!cur)return;if(e.key==='Escape')closeViewer();if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
 addEventListener('resize',()=>{if(cur&&!busy)render();});
