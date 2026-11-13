@@ -389,7 +389,8 @@ const viewer=document.getElementById('viewer'),vstage=document.getElementById('v
 let cur=null,pos=0,rot=0,busy=false,lastFocus=null;
 function fit(ratio,cols){const maxW=Math.min(innerWidth-80,1100),maxH=innerHeight-190;let w=maxW/cols,h=w*ratio;if(h>maxH){h=maxH;w=h/ratio;}return [Math.floor(w),Math.floor(h)];}
 function twoUp(){return innerWidth>=760;}
-function openViewer(it){cur=it;pos=0;rot=0;lastFocus=document.activeElement;vtitle.textContent=it.name;viewer.hidden=false;requestAnimationFrame(()=>viewer.classList.add('show'));render();document.getElementById('vclose').focus();
+let openedAt=0;
+function openViewer(it){openedAt=Date.now();cur=it;pos=0;rot=0;lastFocus=document.activeElement;vtitle.textContent=it.name;viewer.hidden=false;requestAnimationFrame(()=>viewer.classList.add('show'));render();document.getElementById('vclose').focus();
  it.pages.forEach(p=>{const i=new Image();i.src=p;});}
 function closeViewer(){viewer.classList.remove('show');setTimeout(()=>{viewer.hidden=true;vstage.innerHTML='';},250);cur=null;lastFocus&&lastFocus.focus();}
 function spreads(n){const s=[[null,0]];for(let i=1;i<n-1;i+=2)s.push([i,i+1<n-1?i+1:null]);if(n%2===0)s.push([n-1,null]);else s[s.length-1][1]===null?s.push([n-1,null]):s.push([n-1,null]);return dedupe(s);}
@@ -422,7 +423,9 @@ function go(d){
  if(!cur||busy)return;const it=cur;
  if(it.kind!=='book'){if(it.pages.length<2)return;rot+=d*180;pos=((rot/180)%2+2)%2;document.getElementById('card').style.transform=`rotateY(${rot}deg)`;count.textContent=it.sides[pos];return;}
  if(!twoUp()){const n=it.pages.length,np=(pos+d+n)%n;
-  const pg=vstage.querySelector('.pg');busy=true;pg.animate([{transform:'rotateY(0)'},{transform:`rotateY(${d>0?-90:90}deg)`}],{duration:220,easing:'ease-in'}).onfinish=()=>{pos=np;render();vstage.querySelector('.pg').animate([{transform:`rotateY(${d>0?90:-90}deg)`},{transform:'rotateY(0)'}],{duration:220,easing:'ease-out'}).onfinish=()=>busy=false;};return;}
+  // Phones: one page at a time. The page slides out to the side and the next one slides in, no flipping.
+  const sp=vstage.querySelector('.spread');busy=true;const dx=d>0?-40:40;
+  sp.animate([{transform:'translateX(0)',opacity:1},{transform:`translateX(${dx}px)`,opacity:0}],{duration:160,easing:'ease-in'}).onfinish=()=>{pos=np;render();vstage.querySelector('.spread').animate([{transform:`translateX(${-dx}px)`,opacity:0},{transform:'translateX(0)',opacity:1}],{duration:200,easing:'ease-out'}).onfinish=()=>busy=false;};return;}
  const S=bookSpreads();const np=(pos+d+S.length)%S.length;
  const [l,r]=S[pos],[nl,nr]=S[np];const spread=vstage.querySelector('.spread');const L=spread.children[0],R=spread.children[1];
  const leaf=document.createElement('div');leaf.className='leaf';busy=true;
@@ -440,12 +443,15 @@ function go(d){
 }
 prev.addEventListener('click',()=>go(-1));next.addEventListener('click',()=>go(1));
 document.getElementById('vclose').addEventListener('click',closeViewer);
+{let sx=null,sy=0;vstage.addEventListener('touchstart',e=>{if(e.touches.length===1){sx=e.touches[0].clientX;sy=e.touches[0].clientY;}},{passive:true});
+ vstage.addEventListener('touchend',e=>{if(sx==null)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);},{passive:true});}
 const about=document.getElementById('about');
 document.getElementById('aboutbtn').addEventListener('click',()=>about.showModal());
 document.getElementById('abclose').addEventListener('click',()=>about.close());
 about.addEventListener('click',e=>{if(e.target===about)about.close();});
 document.getElementById('abgo').addEventListener('click',()=>{about.close();const b=document.getElementById('boxbtn');if(!document.getElementById('stage').classList.contains('open'))b.click();});
-viewer.addEventListener('click',e=>{if(e.target===viewer||e.target===vstage)closeViewer();});
+// A tap that opens the viewer is followed by a click at the same spot; ignore it so the viewer does not close straight away.
+viewer.addEventListener('click',e=>{if(Date.now()-openedAt<600)return;if(e.target===viewer||e.target===vstage)closeViewer();});
 addEventListener('keydown',e=>{if(!cur)return;if(e.key==='Escape')closeViewer();if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
 addEventListener('resize',()=>{if(cur&&!busy)render();});
 </script>
