@@ -55,6 +55,29 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .about li b{color:var(--accent)}
 .about li::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;border-radius:50%;background:var(--accent)}
 .about .ab-go::before{content:none}
+.about .ab-lead{font-size:16px;font-weight:600;color:var(--accent);margin:0 0 16px}
+.about .ab-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
+.about .ab-steps div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.about .ab-steps b{font-size:15px;color:var(--accent)}
+.about .ab-steps small{font-size:12px;line-height:1.3;color:var(--muted)}
+.about .ab-ico{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sun);color:var(--red);flex:none;margin-bottom:4px}
+.about .ab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.about figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.about figure .th{display:flex;align-items:center;justify-content:center;gap:14px;height:120px;background:#EEF2FA;padding:12px;box-sizing:border-box}
+.about figure .th img{max-height:100%;max-width:100%;object-fit:contain;box-shadow:0 6px 14px rgba(31,58,120,.22);border-radius:3px;background:#fff}
+.about figure.wide{grid-column:span 2;flex-direction:row}
+.about figure.wide .th{height:auto;width:44%;flex:none}
+.about figure.wide .th img{max-height:150px}
+.about figure.props .th img{box-shadow:none;background:none;filter:drop-shadow(0 6px 8px rgba(31,58,120,.25))}
+.about figure.props .pen{height:90px;transform:rotate(-18deg)}.about figure.props .tote{height:96px}
+.about figcaption{padding:10px 12px 12px;font-size:12.5px;line-height:1.35;color:var(--muted);display:flex;flex-direction:column;gap:2px;justify-content:center}
+.about figcaption b{font-size:14px;color:var(--accent)}
+.about .ab-why{display:grid;gap:10px}
+.about .ab-why div{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.about .ab-why .ab-ico{margin:0}
+.about .ab-why p{margin:0;font-size:13px;line-height:1.4;color:var(--muted);display:flex;flex-direction:column}
+.about .ab-why p b{font-size:14.5px;color:var(--accent)}
+
 
 /* Stage */
 .stage{position:relative;flex:1;min-height:640px;max-width:1180px;width:100%;margin:0 auto}
@@ -158,7 +181,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   body{background:#E6ECF6}
   .hint span,.item .label{box-shadow:0 2px 8px rgba(31,58,120,.12)}
   header{flex-wrap:nowrap;padding:12px 12px 12px 16px;border-radius:14px;gap:10px}
-  .eyebrow{font-size:10px;white-space:nowrap;letter-spacing:.06em}
+  .eyebrow{font-size:10px;white-space:nowrap;letter-spacing:.06em;overflow:hidden}
   h1{font-size:26px}
   .links{flex-wrap:nowrap;gap:8px}
   .btn{padding:9px 12px}
@@ -175,9 +198,12 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   .tap{top:calc(44% + 110px)}
   #reset{width:40px;height:40px;padding:0;justify-content:center;font-size:20px}
   .item .label{font-size:11px;padding:5px 9px;margin-top:8px}
+  .item{touch-action:auto;cursor:pointer}
   .foot{display:none}
+  .brand{min-width:0;flex:1}.links{flex:none}
   body:not(.is-open) .hint{display:none}
 }
+@media (max-width:360px){h1{font-size:22px}.eyebrow{font-size:9px}header{padding:10px 10px 10px 12px}#reset,#aboutbtn{width:36px;height:36px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 </style>
 </head>
@@ -219,20 +245,27 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     <h2 id="abtitle">What is the welcome box?</h2>
   </div>
   <div class="ab-body">
-    <p>Arriving on a ward can feel sudden and confusing. The welcome box is a small gift that is waiting for every patient when they come to the cardiology ward.</p>
-    <p>It gathers the things people usually ask about in one place, so patients and their family can find answers in their own time, at their own pace. It is ready in the room when patients arrive, so it adds no extra work for the nurses.</p>
+    <p class="ab-lead">A small gift waiting in the room for every patient on the cardiology ward. Everything people usually ask about, in one box.</p>
+    <div class="ab-steps">
+      <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg></span><b>Read</b><small>at your own pace</small></div>
+      <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18l-1 3 4-2h9a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v9"/><path d="M9 10h6M9 13h4"/></svg></span><b>Ask</b><small>with better questions</small></div>
+      <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span><b>Feel</b><small>at home and less alone</small></div>
+    </div>
     <h3>What is inside</h3>
-    <ul>
-      <li><span><b>Welcome book.</b> Who you will meet, what a day looks like, space for your own questions and stories from other patients.</span></li>
-      <li><span><b>Food card.</b> How meals work on the ward.</span></li>
-      <li><span><b>Things you can ask for.</b> Small comforts you only have to ask the team for.</span></li>
-      <li><span><b>Heart and blood circulation.</b> A simple picture of the heart and blood flow that doctors and patients can point at together, to talk things through and understand each other.</span></li>
-      <li><span><b>Exercise leaflet.</b> Gentle movements to do step by step.</span></li>
-      <li><span><b>Pen and tote bag.</b> To write your questions down and take everything home.</span></li>
-    </ul>
+    <div class="ab-grid">
+      <figure class="wide"><span class="th"><img src="img/book-00.jpg" alt=""></span><figcaption><b>Welcome book</b>The team, your day, your questions, real stories</figcaption></figure>
+      <figure><span class="th"><img src="img/heart-sheet.jpg" alt=""></span><figcaption><b>Heart and blood circulation</b>Point at it together with your doctor</figcaption></figure>
+      <figure><span class="th"><img src="img/ask-1.jpg" alt=""></span><figcaption><b>Things you can ask for</b>Small comforts, just point</figcaption></figure>
+      <figure><span class="th"><img src="img/food-1.jpg" alt=""></span><figcaption><b>Food card</b>Scan and pick your meals</figcaption></figure>
+      <figure><span class="th"><img src="img/band-1.jpg" alt=""></span><figcaption><b>Exercise leaflet</b>Gentle moves, step by step</figcaption></figure>
+      <figure class="wide props"><span class="th"><img src="img/pen.png" alt="" class="pen"><img src="img/tote.png" alt="" class="tote"></span><figcaption><b>Pen and tote bag</b>Write your questions down and take it all home</figcaption></figure>
+    </div>
     <h3>Why it matters</h3>
-    <p>When patients know what to expect, they feel calmer, ask better questions and feel less alone during their stay.</p>
-    <p>Because the everyday answers are already in the box, patients need to call or ask the staff less often for small things. That leaves the team more time for care.</p>
+    <div class="ab-why">
+      <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M9 14c.8 1 1.8 1.5 3 1.5s2.2-.5 3-1.5"/><path d="M9.5 10h.01M14.5 10h.01"/></svg></span><p><b>Calmer patients</b>They know what to expect from day one.</p></div>
+      <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3 3 0 0 1 0 6M18 20a6 6 0 0 0-3-5"/></svg></span><p><b>Fewer calls for small things</b>The answers are already in the box, so the team has more time for care.</p></div>
+      <div><span class="ab-ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><p><b>No extra work for nurses</b>It is ready in the room when the patient arrives.</p></div>
+    </div>
   </div>
   <div class="ab-bar">
     <button class="btn" id="abclose">Close</button>
@@ -274,13 +307,15 @@ const moved={};let lastMode=null;
 function itemXY(e,sr){const xv=e.style.getPropertyValue('--x'),yv=e.style.getPropertyValue('--y');
  return [xv.endsWith('px')?parseFloat(xv):parseFloat(xv)/100*sr.width, yv.endsWith('px')?parseFloat(yv):parseFloat(yv)/100*sr.height];}
 function place(){const narrow=stage.clientWidth<640;const mode=narrow?'narrow':'wide';if(mode!==lastMode){for(const k in moved)delete moved[k];lastMode=mode;}const S=SPOTS[mode];
- order.forEach((id,i)=>{const [x,y,w,r]=S[id];const e=els[id];e.style.setProperty('--d',(-i*.7)+'s');if(moved[id])return;e.style.setProperty('--tilt',TILT+'deg');e.style.zIndex=id==='tote'?0:1;e.style.setProperty('--x',x+'%');e.style.setProperty('--y',y>100?y+'px':y+'%');e.style.setProperty('--w',w+'px');e.style.setProperty('--r',r+'deg');});}
+ order.forEach((id,i)=>{const [x,y,w,r]=S[id];const e=els[id];e.style.setProperty('--d',(-i*.7)+'s');if(moved[id])return;e.style.setProperty('--tilt',TILT+'deg');e.style.zIndex=id==='tote'?0:1;e.style.setProperty('--x',x+'%');e.style.setProperty('--y',y>100?y+'px':y+'%');e.style.setProperty('--w',(narrow?Math.round(w*Math.min(1,(stage.clientWidth-8)/358)):w)+'px');e.style.setProperty('--r',r+'deg');});}
 order.forEach(id=>itemsEl.appendChild(els[id]));
 // Drag any piece around the bed. A press without movement opens it (props just stay put).
 let zTop=10;
 order.forEach(id=>{const e=els[id];let st=null;
- e.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;const sr=stage.getBoundingClientRect();const [x,y]=itemXY(e,sr);st={px:ev.clientX,py:ev.clientY,x,y,drag:false};e.setPointerCapture(ev.pointerId);});
+ e.addEventListener('pointerdown',ev=>{if(ev.button!==0)return;const sr=stage.getBoundingClientRect();const [x,y]=itemXY(e,sr);st={px:ev.clientX,py:ev.clientY,x,y,drag:false};if(stage.clientWidth>=640)e.setPointerCapture(ev.pointerId);});
  e.addEventListener('pointermove',ev=>{if(!st)return;const dx=ev.clientX-st.px,dy=ev.clientY-st.py;
+  // Phones: no dragging. A finger that moves is scrolling the page, so it should not open the piece either.
+  if(stage.clientWidth<640){if(Math.hypot(dx,dy)>8)st=null;return;}
   if(!st.drag&&Math.hypot(dx,dy)>5){st.drag=true;e.classList.add('dragging');e.getAnimations().forEach(a=>a.finish());}
   if(st.drag){const sr=stage.getBoundingClientRect();const nx=Math.max(0,Math.min(sr.width,st.x+dx)),ny=Math.max(0,Math.min(sr.height,st.y+dy));
    e.style.setProperty('--x',nx+'px');e.style.setProperty('--y',ny+'px');moved[id]=true;}});
