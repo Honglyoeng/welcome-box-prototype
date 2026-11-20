@@ -302,11 +302,11 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 </div>
 
 <script>
-const BOOK_LABELS=["Cover","Section 1: Welcome","Three things you can do now","Who you will meet","Section 2: Your stay","Every day","A day here, morning","Afternoon and night","Your free time","From arrival to home","From arrival to home: 1 and 2","From arrival to home: 3 and 4","From arrival to home: 5 and 6","Section 3: My questions","Not sure what to ask?","My questions","Something on my mind","Section 4: You are not alone","Story 1","Story 2","Story 3","Back cover"];
+const BOOK_LABELS=["Cover","Section 1: Welcome","Three things you can do now","Who you will meet","Section 2: Your stay","Every day","A day here, morning","Afternoon and night","Your free time","Heart crossword","Sudoku","From arrival to home","From arrival to home: 1 and 2","From arrival to home: 3 and 4","From arrival to home: 5 and 6","Section 3: My questions","Not sure what to ask?","My questions","Something on my mind","Section 4: You are not alone","Story 1","Story 2","Story 3","Back cover"];
 const ITEMS=[
  {id:'book',name:'Welcome book',kind:'book',ratio:595/420,
   // Coloured section tabs on the fore-edge, as in the design: divider page, top on a 595-high page, colours, label.
-  tabs:[{p:1,top:40,bg:'#F1F09F',fg:'#E2141B',label:'Welcome'},{p:4,top:146,bg:'#3459A9',fg:'#FFFFFF',label:'Your stay'},{p:13,top:252,bg:'#EE2D7D',fg:'#FFFFFF',label:'My questions'},{p:17,top:358,bg:'#E2141B',fg:'#FFFFFF',label:'Stories'}],pages:BOOK_LABELS.map((_,i)=>`img/book-${String(i).padStart(2,'0')}.jpg`),thumb:'img/book-00.jpg'},
+  tabs:[{p:1,top:40,bg:'#F1F09F',fg:'#E2141B',label:'Welcome'},{p:4,top:146,bg:'#3459A9',fg:'#FFFFFF',label:'Your stay'},{p:15,top:252,bg:'#EE2D7D',fg:'#FFFFFF',label:'My questions'},{p:19,top:358,bg:'#E2141B',fg:'#FFFFFF',label:'Stories'}],pages:BOOK_LABELS.map((_,i)=>`img/book-${String(i).padStart(2,'0')}.jpg`),thumb:'img/book-00.jpg'},
  {id:'food',name:'Food card',kind:'card',ratio:298/420,pages:['img/food-1.jpg','img/food-2.jpg'],sides:['Front','Back']},
  {id:'ask',name:'Things you can ask for',kind:'card',ratio:595/420,pages:['img/ask-1.jpg'],sides:['One-sided']},
  {id:'band',name:'Exercise leaflet',kind:'card',ratio:595/842,pages:['img/band-1.jpg','img/band-2.jpg'],sides:['Panels 1 to 3','Panels 4 to 6']},
