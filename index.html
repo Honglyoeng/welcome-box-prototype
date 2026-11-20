@@ -186,7 +186,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .foot span{display:inline-block;background:var(--cream);color:var(--muted);padding:6px 12px;border-radius:999px}
 /* Phones: a compact header, the box centred on one screen, then a tidy two-column spread once it opens. */
 .lbl-short{display:none}
-.lang{display:inline-flex;background:var(--chip);border:1.5px solid var(--line);border-radius:999px;padding:2px;gap:2px}
+.lang{position:absolute;top:14px;right:14px;z-index:20;box-shadow:0 4px 14px rgba(31,58,120,.18);display:inline-flex;background:var(--chip);border:1.5px solid var(--line);border-radius:999px;padding:2px;gap:2px}
 .lang button{font:700 12px/1 var(--body);letter-spacing:.04em;border:0;background:none;color:var(--ink);padding:8px 10px;border-radius:999px;cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 html[lang="nl"] .inner .stack{background-image:url(img/book-00-nl.jpg)}
@@ -203,7 +203,8 @@ html[lang="nl"] .lid .in i{background-image:url(img/box-inside-nl.jpg)}
   .links{flex-wrap:nowrap;gap:8px}
   .btn{padding:9px 12px}
   .lbl-long{display:none}.lbl-short{display:inline}
-  .lang button{padding:8px 8px}
+  .lang{top:10px;right:10px}
+  .lang button{padding:8px 10px}
   #aboutbtn{width:40px;height:40px;padding:0;justify-content:center}
   #aboutbtn::before{width:22px;height:22px;font-size:14px;background:none;color:#fff}
   .hint{text-align:center;margin-top:10px}
@@ -222,8 +223,8 @@ html[lang="nl"] .lid .in i{background-image:url(img/box-inside-nl.jpg)}
   body:not(.is-open) .hint{display:none}
 }
 @media (max-width:360px){.ey-x{display:none}h1{font-size:22px}.eyebrow{font-size:9px}header{padding:10px 10px 10px 12px}#reset,#aboutbtn{width:36px;height:36px}}
-@media (max-width:400px){header h1{white-space:nowrap;font-size:20px}.lang button{padding:7px 7px;font-size:11px}.links{gap:6px}}
-@media (max-width:360px){header h1{font-size:17px}.lang button{padding:6px 6px}header{gap:6px}}
+@media (max-width:400px){header h1{white-space:nowrap;font-size:20px}.links{gap:6px}}
+@media (max-width:360px){header h1{font-size:17px}header{gap:6px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 </style>
 </head>
@@ -236,13 +237,13 @@ html[lang="nl"] .lid .in i{background-image:url(img/box-inside-nl.jpg)}
       <h1>The welcome box</h1>
     </div>
     <div class="links">
-      <div class="lang" id="langsw" role="group" aria-label="Language / Taal"><button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button><button type="button" data-lang="nl" aria-pressed="false" lang="nl">NL</button></div>
       <button class="btn" id="reset" hidden aria-label="Put everything back"><span class="lbl-long">Put everything back</span><span class="lbl-short" aria-hidden="true">↺</span></button>
       <button class="btn primary" id="aboutbtn" aria-haspopup="dialog" aria-label="What is the welcome box?"><span class="lbl-long">What is the welcome box?</span></button>
     </div>
   </header>
 
   <div class="stage" id="stage">
+    <div class="lang" id="langsw" role="group" aria-label="Language / Taal"><button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button><button type="button" data-lang="nl" aria-pressed="false" lang="nl">NL</button></div>
     <button class="boxbtn" id="boxbtn" aria-label="Open the welcome box">
       <div class="scene"><div class="box">
         <div class="shadow"></div>
