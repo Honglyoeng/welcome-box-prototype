@@ -186,6 +186,13 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 .foot span{display:inline-block;background:var(--cream);color:var(--muted);padding:6px 12px;border-radius:999px}
 /* Phones: a compact header, the box centred on one screen, then a tidy two-column spread once it opens. */
 .lbl-short{display:none}
+.lang{display:inline-flex;background:var(--chip);border:1.5px solid var(--line);border-radius:999px;padding:2px;gap:2px}
+.lang button{font:700 12px/1 var(--body);letter-spacing:.04em;border:0;background:none;color:var(--ink);padding:8px 10px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+html[lang="nl"] .inner .stack{background-image:url(img/book-00-nl.jpg)}
+html[lang="nl"] .w-front i,html[lang="nl"] .w-back i{background-image:url(img/box-side-nl.jpg)}
+html[lang="nl"] .lid .out{background-image:url(img/box-lid-nl.jpg)}
+html[lang="nl"] .lid .in i{background-image:url(img/box-inside-nl.jpg)}
 @media (max-width:640px){
   .wrap{padding-block:12px 20px;background:#E6ECF6}
   body{background:#E6ECF6}
@@ -196,6 +203,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   .links{flex-wrap:nowrap;gap:8px}
   .btn{padding:9px 12px}
   .lbl-long{display:none}.lbl-short{display:inline}
+  .lang button{padding:8px 8px}
   #aboutbtn{width:40px;height:40px;padding:0;justify-content:center}
   #aboutbtn::before{width:22px;height:22px;font-size:14px;background:none;color:#fff}
   .hint{text-align:center;margin-top:10px}
@@ -214,6 +222,8 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
   body:not(.is-open) .hint{display:none}
 }
 @media (max-width:360px){.ey-x{display:none}h1{font-size:22px}.eyebrow{font-size:9px}header{padding:10px 10px 10px 12px}#reset,#aboutbtn{width:36px;height:36px}}
+@media (max-width:400px){header h1{white-space:nowrap;font-size:20px}.lang button{padding:7px 7px;font-size:11px}.links{gap:6px}}
+@media (max-width:360px){header h1{font-size:17px}.lang button{padding:6px 6px}header{gap:6px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 </style>
 </head>
@@ -226,6 +236,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
       <h1>The welcome box</h1>
     </div>
     <div class="links">
+      <div class="lang" id="langsw" role="group" aria-label="Language / Taal"><button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button><button type="button" data-lang="nl" aria-pressed="false" lang="nl">NL</button></div>
       <button class="btn" id="reset" hidden aria-label="Put everything back"><span class="lbl-long">Put everything back</span><span class="lbl-short" aria-hidden="true">↺</span></button>
       <button class="btn primary" id="aboutbtn" aria-haspopup="dialog" aria-label="What is the welcome box?"><span class="lbl-long">What is the welcome box?</span></button>
     </div>
@@ -254,7 +265,7 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
     <span class="eyebrow">Cardiology ward</span>
     <h2 id="abtitle">What is the welcome box?</h2>
   </div>
-  <div class="ab-body">
+  <div class="ab-body" id="abbody">
     <h3 class="ab-first">The problem</h3>
     <div class="ab-prob">
       <p>A stay on the cardiology ward often starts suddenly. Patients are worried, tired and get a lot of information at once.</p>
@@ -302,11 +313,11 @@ h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,
 </div>
 
 <script>
-const BOOK_LABELS=["Cover","Section 1: Welcome","Three things you can do now","Who you will meet","Section 2: Your stay","Every day","A day here, morning","Afternoon and night","Your free time","Heart crossword","Sudoku","From arrival to home","From arrival to home: 1 and 2","From arrival to home: 3 and 4","From arrival to home: 5 and 6","Section 3: My questions","Not sure what to ask?","My questions","Something on my mind","Section 4: You are not alone","Story 1","Story 2","Story 3","Back cover"];
+const BOOK_LABELS_EN=["Cover","Section 1: Welcome","Three things you can do now","Who you will meet","Section 2: Your stay","Every day","A day here, morning","Afternoon and night","Your free time","Heart crossword","Sudoku","From arrival to home","From arrival to home: 1 and 2","From arrival to home: 3 and 4","From arrival to home: 5 and 6","Section 3: My questions","Not sure what to ask?","My questions","Something on my mind","Section 4: You are not alone","Story 1","Story 2","Story 3","Back cover"];
 const ITEMS=[
  {id:'book',name:'Welcome book',kind:'book',ratio:595/420,
   // Coloured section tabs on the fore-edge, as in the design: divider page, top on a 595-high page, colours, label.
-  tabs:[{p:1,top:40,bg:'#F1F09F',fg:'#E2141B',label:'Welcome'},{p:4,top:146,bg:'#3459A9',fg:'#FFFFFF',label:'Your stay'},{p:15,top:252,bg:'#EE2D7D',fg:'#FFFFFF',label:'My questions'},{p:19,top:358,bg:'#E2141B',fg:'#FFFFFF',label:'Stories'}],pages:BOOK_LABELS.map((_,i)=>`img/book-${String(i).padStart(2,'0')}.jpg`),thumb:'img/book-00.jpg'},
+  tabs:[{p:1,top:40,bg:'#F1F09F',fg:'#E2141B',label:'Welcome'},{p:4,top:146,bg:'#3459A9',fg:'#FFFFFF',label:'Your stay'},{p:15,top:252,bg:'#EE2D7D',fg:'#FFFFFF',label:'My questions'},{p:19,top:358,bg:'#E2141B',fg:'#FFFFFF',label:'Stories'}],pages:BOOK_LABELS_EN.map((_,i)=>`img/book-${String(i).padStart(2,'0')}.jpg`),thumb:'img/book-00.jpg'},
  {id:'food',name:'Food card',kind:'card',ratio:298/420,pages:['img/food-1.jpg','img/food-2.jpg'],sides:['Front','Back']},
  {id:'ask',name:'Things you can ask for',kind:'card',ratio:595/420,pages:['img/ask-1.jpg'],sides:['One-sided']},
  {id:'band',name:'Exercise leaflet',kind:'card',ratio:595/842,pages:['img/band-1.jpg','img/band-2.jpg'],sides:['Panels 1 to 3','Panels 4 to 6']},
@@ -353,7 +364,7 @@ function setOpen(v){
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  document.getElementById('reset').hidden=!v;
  document.body.classList.toggle('is-open',v);
- boxbtn.setAttribute('aria-label',v?'Close the welcome box':'Open the welcome box');
+ boxbtn.setAttribute('aria-label',v?tr('Close the welcome box','Sluit de welkomstdoos'):tr('Open the welcome box','Open de welkomstdoos'));
  if(v){stage.classList.add('open');
   // Wait until the box has settled and the lid is mostly open, then lift each item out of the box and lay it on the table.
   setTimeout(()=>{if(!isOpen||stage.classList.contains('out'))return;const [cx,cy0]=boxCenter();const cy=cy0-boxbtn.getBoundingClientRect().height*.08;const sr=stage.getBoundingClientRect();stage.classList.add('out');
@@ -406,7 +417,7 @@ function render(){
  if(it.kind==='book'){
   if(twoUp()){const S=bookSpreads();pos=Math.min(pos,S.length-1);const [l,r]=S[pos];const [w,h]=fit(it.ratio,2);
    vstage.innerHTML=`<div class="spread" style="--pw:${w}px;--ph:${h}px"><div class="pg l ${l==null?'blank':''}" style="${pgStyle(l)}"></div><div class="pg r ${r==null?'blank':''}" style="${pgStyle(r)}"></div>${edgeTabs(r==null?Infinity:r,l==null?w:0,2*w,w,h)}</div>`;
-   count.textContent=[l,r].filter(x=>x!=null).map(x=>BOOK_LABELS[x]).join('  ·  ');
+   count.textContent=[l,r].filter(x=>x!=null).map(x=>bookLabels()[x]).join('  ·  ');
    prev.disabled=false;next.disabled=false;
   }else{pos=Math.min(pos,it.pages.length-1);const [w,h]=fit(it.ratio,1);
    vstage.innerHTML=`<div class="spread single" style="--pw:${w}px;--ph:${h}px"><div class="pg" style="${pgStyle(pos)}"></div>${edgeTabs(pos,0,w,w,h)}</div>`;
@@ -454,6 +465,37 @@ document.getElementById('abgo').addEventListener('click',()=>{about.close();cons
 viewer.addEventListener('click',e=>{if(Date.now()-openedAt<600)return;if(e.target===viewer||e.target===vstage)closeViewer();});
 addEventListener('keydown',e=>{if(!cur)return;if(e.key==='Escape')closeViewer();if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
 addEventListener('resize',()=>{if(cur&&!busy)render();});
+
+// ---- Language switch (English / Dutch) ----
+let LANG='en';
+function tr(en,nl){return LANG==='nl'?nl:en;}
+const BOOK_LABELS_NL=["Voorkant","Deel 1: Welkom","Drie dingen die u nu kunt doen","Wie u ontmoet","Deel 2: Uw verblijf","Elke dag","Een dag hier, ochtend","Namiddag en nacht","Uw vrije tijd","Hartkruiswoord","Sudoku","Van aankomst tot thuis","Van aankomst tot thuis: 1 en 2","Van aankomst tot thuis: 3 en 4","Van aankomst tot thuis: 5 en 6","Deel 3: Mijn vragen","Weet u niet wat te vragen?","Mijn vragen","Iets wat me bezighoudt","Deel 4: U bent niet alleen","Verhaal 1","Verhaal 2","Verhaal 3","Achterkant"];
+function bookLabels(){return LANG==='nl'?BOOK_LABELS_NL:BOOK_LABELS_EN;}
+const NL_ITEM={book:{name:'Welkomstboek',tabs:['Welkom','Uw verblijf','Mijn vragen','Verhalen']},
+ food:{name:'Maaltijdkaart',sides:['Voorkant','Achterkant']},
+ ask:{name:'Dit kunt u vragen',sides:['Eenzijdig']},
+ band:{name:'Oefenfolder',sides:['Panelen 1 tot 3','Panelen 4 tot 6']},
+ heart:{name:'Hart en bloedsomloop',sides:['Voorkant: hart','Achterkant: bloedsomloop']}};
+const nlPath=x=>x.replace(/\.jpg$/,'-nl.jpg');
+ITEMS.forEach(it=>{it.en={name:it.name,sides:it.sides,pages:it.pages,thumb:it.thumb,tabs:it.tabs?it.tabs.map(t=>t.label):null};});
+const STATIC=[['header .eyebrow','Dienst cardiologie<span class="ey-x">&nbsp;· prototype</span>'],['header h1','De welkomstdoos'],['#reset .lbl-long','Alles terugleggen'],['#aboutbtn .lbl-long','Wat is de welkomstdoos?'],['#tap','Tik op de doos'],['.ab-head .eyebrow','Dienst cardiologie'],['#abtitle','Wat is de welkomstdoos?'],['#abbody',"\n    <h3 class=\"ab-first\">Het probleem</h3>\n    <div class=\"ab-prob\">\n      <p>Een opname op cardiologie begint vaak plots. Patiënten zijn ongerust, moe en krijgen veel informatie tegelijk.</p>\n      <ul>\n        <li><span><b>Ze weten niet wat er gaat gebeuren.</b> Niemand vertelt hen het plan voor de dag.</span></li>\n        <li><span><b>Ze willen de verpleegkundigen niet storen.</b> Het team heeft het druk, dus vragen blijven onuitgesproken of worden vergeten.</span></li>\n        <li><span><b>Eenvoudige dingen gaan verloren.</b> Hoe je eten bestelt, de wifi, wat je moet meebrengen.</span></li>\n        <li><span><b>Het hart is moeilijk te begrijpen.</b> Medische woorden zijn verwarrend zonder een tekening.</span></li>\n        <li><span><b>Ze weten niet wie wie is.</b> Veel gezichten, weinig namen.</span></li>\n        <li><span><b>De dagen voelen lang en eenzaam.</b> Er is weinig te doen, en familie is er niet altijd.</span></li>\n      </ul>\n    </div>\n    <h3>Het idee</h3>\n    <p class=\"ab-lead\">Een klein geschenk dat in de kamer klaarligt voor elke patiënt op cardiologie. Alles waar mensen meestal naar vragen, in één doos.</p>\n    <div class=\"ab-steps\">\n      <div><span class=\"ab-ico\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z\"/><path d=\"M4 21V5\"/></svg></span><b>Lezen</b><small>op je eigen tempo</small></div>\n      <div><span class=\"ab-ico\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 18l-1 3 4-2h9a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v9\"/><path d=\"M9 10h6M9 13h4\"/></svg></span><b>Vragen</b><small>met betere vragen</small></div>\n      <div><span class=\"ab-ico\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z\"/></svg></span><b>Voelen</b><small>thuis en minder alleen</small></div>\n    </div>\n    <h3>Wat zit erin</h3>\n    <ul>\n      <li><span><b>Welkomstboek.</b> Wie je ontmoet, hoe een dag eruitziet, ruimte voor je eigen vragen en verhalen van andere patiënten.</span></li>\n      <li><span><b>Maaltijdkaart.</b> Hoe de maaltijden werken op de afdeling.</span></li>\n      <li><span><b>Dit kunt u vragen.</b> Kleine extra's waar je het team gewoon om kunt vragen.</span></li>\n      <li><span><b>Hart en bloedsomloop.</b> Een eenvoudige tekening van het hart en de bloedsomloop die artsen en patiënten samen kunnen aanwijzen, om dingen te bespreken en elkaar te begrijpen.</span></li>\n      <li><span><b>Oefenfolder.</b> Rustige oefeningen om stap voor stap te doen.</span></li>\n      <li><span><b>Pen en draagtas.</b> Om je vragen op te schrijven en alles mee naar huis te nemen.</span></li>\n    </ul>\n    <h3>Waarom het ertoe doet</h3>\n    <div class=\"ab-why\">\n      <div><span class=\"ab-ico\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8\"/><path d=\"M9 14c.8 1 1.8 1.5 3 1.5s2.2-.5 3-1.5\"/><path d=\"M9.5 10h.01M14.5 10h.01\"/></svg></span><p><b>Rustigere patiënten</b>Ze weten vanaf dag één wat ze kunnen verwachten.</p></div>\n      <div><span class=\"ab-ico\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"9\" cy=\"8\" r=\"3\"/><path d=\"M3 20a6 6 0 0 1 12 0\"/><path d=\"M16 5a3 3 0 0 1 0 6M18 20a6 6 0 0 0-3-5\"/></svg></span><p><b>Minder oproepen voor kleine dingen</b>De antwoorden zitten al in de doos, dus het team heeft meer tijd voor zorg.</p></div>\n      <div><span class=\"ab-ico\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8\"/><path d=\"M12 8v4l3 2\"/></svg></span><p><b>Geen extra werk voor verpleegkundigen</b>Ze ligt klaar in de kamer als de patiënt aankomt.</p></div>\n    </div>\n  "],['#abclose','Sluiten'],['#abgo','Open de doos'],['#vclose','Sluiten'],['#prev','← Terug'],['#next','Volgende →']];
+const STATIC_EN=STATIC.map(([sel])=>document.querySelector(sel).innerHTML);
+const ARIA=[['#reset','Put everything back','Alles terugleggen'],['#aboutbtn','What is the welcome box?','Wat is de welkomstdoos?'],['#prev','Previous','Vorige'],['#next','Next','Volgende']];
+function setLang(l){LANG=l==='nl'?'nl':'en';document.documentElement.lang=LANG;
+ STATIC.forEach(([sel,nl],i)=>{document.querySelector(sel).innerHTML=LANG==='nl'?nl:STATIC_EN[i];});
+ ARIA.forEach(([sel,en,nl])=>document.querySelector(sel).setAttribute('aria-label',tr(en,nl)));
+ boxbtn.setAttribute('aria-label',isOpen?tr('Close the welcome box','Sluit de welkomstdoos'):tr('Open the welcome box','Open de welkomstdoos'));
+ ITEMS.forEach(it=>{const n=NL_ITEM[it.id],e=it.en,nl=LANG==='nl';
+  it.name=nl?n.name:e.name;if(e.sides)it.sides=nl?n.sides:e.sides;
+  it.pages=nl?e.pages.map(nlPath):e.pages;if(e.thumb)it.thumb=nl?nlPath(e.thumb):e.thumb;
+  if(it.kind==='book')it.tabs.forEach((t,i)=>t.label=nl?n.tabs[i]:e.tabs[i]);
+  const b=els[it.id];b.querySelector('.cov img').src=it.thumb||it.pages[0];b.querySelector('.label').textContent=it.name;b.setAttribute('aria-label',tr('Look through: ','Bekijk: ')+it.name);});
+ document.querySelectorAll('#langsw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===LANG)));
+ if(cur){vtitle.textContent=cur.name;render();}
+ try{localStorage.setItem('wb-lang',LANG);}catch(e){}
+ try{const u=new URL(location.href);if(LANG==='nl')u.searchParams.set('lang','nl');else u.searchParams.delete('lang');history.replaceState(null,'',u);}catch(e){}}
+document.querySelectorAll('#langsw button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+{let l=null;try{l=new URLSearchParams(location.search).get('lang');}catch(e){}if(!l){try{l=localStorage.getItem('wb-lang');}catch(e){}}if(l==='nl')setLang('nl');}
 </script>
 
 </body>
